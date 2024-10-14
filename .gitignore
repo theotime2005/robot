@@ -1,0 +1,12 @@
+# IDE
+.vscode
+.idea
+
+# MacOS files
+.DS_Store
+
+# Python cach
+**__pycach__
+
+# Env
+.venv
