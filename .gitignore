@@ -6,7 +6,10 @@
 .DS_Store
 
 # Python cach
-**__pycach__
+**__pycache__/**
 
 # Env
 .venv
+
+# variables
+.env
