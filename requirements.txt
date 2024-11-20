@@ -201,6 +201,9 @@ pyparsing==3.2.0
 pyproject_hooks==1.2.0
 python-dotenv==1.0.1
 pyttsx3==2.98
+pyparsing==3.2.0
+pyproject_hooks==1.2.0
+python-dotenv==1.0.1
 RapidFuzz==3.10.0
 requests==2.32.3
 requests-toolbelt==1.0.0
