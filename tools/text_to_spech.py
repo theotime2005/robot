@@ -1,28 +1,17 @@
-import pyttsx3
 import sys
+from gtts import gTTS
+from playsound import playsound
+import tempfile
 
 def text_to_speech(text):
     """
-    Énonce le texte fourni en utilisant le module pyttsx3.
-
-    Args:
-        text (str): Le texte à énoncer.
+    Énonce le texte en utilisant gTTS et playsound.
     """
-    # Initialisation de pyttsx3
-    engine = pyttsx3.init()
+    tts = gTTS(text, lang="fr")
+    with tempfile.NamedTemporaryFile(delete=True, suffix=".mp3") as tmp_file:
+        tts.save(tmp_file.name)
+        playsound(tmp_file.name)
 
-    # Configurer la voix (optionnel)
-    voices = engine.getProperty('voices')
-    for voice in voices:
-        if "fr_FR" in voice.id:
-            engine.setProperty('voice', voice.id)
-
-    # Configurer le débit de parole (optionnel)
-    engine.setProperty('rate', 150)  # Ajuste la vitesse de lecture (valeur par défaut ~200)
-
-    # Énoncer le texte
-    engine.say(text)
-    engine.runAndWait()
 
 # Exemple d'utilisation
 if __name__ == "__main__":
