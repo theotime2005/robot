@@ -42,19 +42,18 @@ class AnalyseurImageGemini:
         :param prompt_text: str
         :return: str
         """
-        model = genai.generative_models(model_name="gemini-1.5-flash")
+        model = genai.GenerativeModel(model_name="gemini-1.5-flash")
         response = model.generate_content([self.fichier, prompt_text])
         return response.text
 
 # Exemple d'utilisation
 if __name__ == "__main__":
     chemin_image = sys.argv[1]
-    prompt = sys.argv[2]
 
     analyseur = AnalyseurImageGemini(chemin_image)
     analyseur.telecharger_image()
     response = analyseur.description("Décris cette image pour une personne aveugle.")
     if response:
-        markdown(f"Réponse: {response}")
+        print(f"Réponse: {response}")
     else:
         print("Erreur aucune réponse obtenues.")

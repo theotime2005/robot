@@ -6,7 +6,7 @@
 .DS_Store
 
 # Python cach
-**__pycache__/**
+**/__pycache__
 
 # Env
 .venv
