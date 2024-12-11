@@ -5,8 +5,6 @@ import threading
 import tools as tools
 from timer import TimerExecution
 
-PROMPT_DESCRIPTION = "Tu fais de l'audio description pour une personne non voyante. Voici une photo. Décris-la aussi précisément que possible."
-
 class Robot(threading.Thread):
     def __init__(self, function_on_progress, function_on_end):
         self.timer = TimerExecution()
@@ -24,7 +22,7 @@ class Robot(threading.Thread):
             self.function_on_progress("gemini")
             analyseur = tools.AnalyseurImageGemini(image)
             analyseur.telecharger_image()
-            response = analyseur.description(PROMPT_DESCRIPTION)
+            response = analyseur.description()
             if not response:
                 return self.__end("error")
             # End with say response.

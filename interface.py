@@ -6,8 +6,6 @@ from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLa
 import tools
 from timer import TimerExecution
 
-PROMPT_DESCRIPTION = "Tu fais de l'audio description pour une personne non voyante. Voici une photo. Décris-la aussi précisément que possible."
-
 class RobotWorker(QThread):
     update_signal = pyqtSignal(str)
 
@@ -24,7 +22,7 @@ class RobotWorker(QThread):
             self.update_signal.emit("gemini")
             analyseur = tools.AnalyseurImageGemini(image)
             analyseur.telecharger_image()
-            response = analyseur.description(PROMPT_DESCRIPTION)
+            response = analyseur.description()
             if not response:
                 self.update_signal.emit("error")
                 return

@@ -14,7 +14,9 @@ if not api_key:
 # Configurer l'API Gemini
 genai.configure(api_key=api_key)
 
-
+PROMPT_FILE_NAME = "prompt.txt"
+folder_path = os.path.dirname(os.path.abspath(__file__))
+PROMPT_FILE_PATH = os.path.join(folder_path, PROMPT_FILE_NAME)
 
 class AnalyseurImageGemini:
     def __init__(self, chemin_image):
@@ -22,8 +24,10 @@ class AnalyseurImageGemini:
         Initialise l'analyseur avec le chemin de l'image à analyser.
         :param chemin_image: Chemin vers l'image à analyser
         """
+        self.prompt = ""
         self.chemin_image = chemin_image
         self.fichier = None
+        self.load_prompt()
 
     def telecharger_image(self):
         """
@@ -36,14 +40,20 @@ class AnalyseurImageGemini:
             print(f"Erreur lors du téléchargement de l'image : {e}")
             return False
 
-    def description(self, prompt_text):
+    def load_prompt(self):
+        try:
+            with open(PROMPT_FILE_PATH, "r") as file:
+                self.prompt = file.read()
+        except Exception as e:
+            return False
+
+    def description(self):
         """
         Décrire l'image
-        :param prompt_text: str
         :return: str
         """
         model = genai.GenerativeModel(model_name="gemini-1.5-flash")
-        response = model.generate_content([self.fichier, prompt_text])
+        response = model.generate_content([self.fichier, self.prompt])
         return response.text
 
 # Exemple d'utilisation
@@ -52,7 +62,7 @@ if __name__ == "__main__":
 
     analyseur = AnalyseurImageGemini(chemin_image)
     analyseur.telecharger_image()
-    response = analyseur.description("Décris cette image pour une personne aveugle.")
+    response = analyseur.description()
     if response:
         print(f"Réponse: {response}")
     else:
