@@ -34,7 +34,7 @@ class AnalyseurOllama:
                 'images': [self.image_path]
             },
         ])
-        return response
+        return response.message.content
 
 if __name__ == "__main__":
     image_path = sys.argv[1]
