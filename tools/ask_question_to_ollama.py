@@ -10,6 +10,7 @@ class AnalyseurOllama:
     def __init__(self, image_path):
         self.image_path = image_path
         self.prompt = ""
+        self.import_prompt()
 
     def import_prompt(self):
         try:
