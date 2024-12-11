@@ -4,7 +4,7 @@
 import sys
 import threading
 import tools as tools
-from timer import TimerExecution
+from tools.timer import TimerExecution
 
 class Robot(threading.Thread):
     def __init__(self, model, function_on_progress, function_on_end):

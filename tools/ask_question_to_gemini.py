@@ -58,12 +58,17 @@ class AnalyseurImageGemini:
 
 # Exemple d'utilisation
 if __name__ == "__main__":
+    from timer import TimerExecution
+    timer = TimerExecution()
     chemin_image = sys.argv[1]
+    timer.start_timer()
 
     analyseur = AnalyseurImageGemini(chemin_image)
     analyseur.telecharger_image()
     response = analyseur.description()
+    timer.stop_timer()
     if response:
         print(f"Réponse: {response}")
+        print(f"Temps d'exécution: {timer.result}")
     else:
         print("Erreur aucune réponse obtenues.")

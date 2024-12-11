@@ -1,10 +1,9 @@
 import sys
-import time
 
 from PyQt6.QtCore import QThread, pyqtSignal, Qt
 from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QProgressBar, QComboBox
 import tools
-from timer import TimerExecution
+from tools.timer import TimerExecution
 
 class RobotWorker(QThread):
     update_signal = pyqtSignal(str)
