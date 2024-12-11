@@ -1,0 +1,9 @@
+Décris l'image avec précision en français. Mentionne :
+
+Les éléments principaux visibles (objets, personnes, animaux, paysages).
+Leurs couleurs, formes ou tailles si elles sont pertinentes.
+L'action ou la situation représentée, si applicable.
+Le contexte ou l'atmosphère générale (exemple : "une scène paisible", "une ambiance animée").
+Les détails pertinents pour aider à bien comprendre l'image (exemple : "une voiture rouge garée devant une maison en briques").
+Adapte ton vocabulaire pour que la description soit claire, complète et accessible à tout lecteur.
+Ta réponse sera lue par une voix audio.
