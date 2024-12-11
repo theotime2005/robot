@@ -1,7 +1,10 @@
 import sys
+import time
+
 from PyQt6.QtCore import QThread, pyqtSignal, Qt
 from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QProgressBar
 import tools
+from timer import TimerExecution
 
 PROMPT_DESCRIPTION = "Tu fais de l'audio description pour une personne non voyante. Voici une photo. Décris-la aussi précisément que possible."
 
@@ -36,6 +39,7 @@ class RobotWorker(QThread):
 
 class RobotApp(QWidget):
     def __init__(self):
+        self.timer = TimerExecution()
         super().__init__()
         self.setWindowTitle("Robot")
         self.setGeometry(100, 100, 300, 200)
@@ -73,6 +77,7 @@ class RobotApp(QWidget):
         # Démarrer le processus de l'analyse dans un thread séparé
         self.worker = RobotWorker()
         self.worker.update_signal.connect(self.update_status)
+        self.timer.start_timer()
         self.worker.start()
 
     def update_status(self, status):
@@ -84,11 +89,13 @@ class RobotApp(QWidget):
         elif status == "saying":
             self.status_label.setText("Énonciation")
         elif status == "success":
-            self.status_label.setText("")
+            self.timer.stop_timer()
             self.progress_bar.setVisible(False)
+            self.status_label.setText(f"Réalisé en {self.timer.result}")
             self.start_button.setEnabled(True)
         elif status == "error":
-            self.status_label.setText("Une erreur est survenue")
+            self.timer.stop_timer()
+            self.status_label.setText(f"Une erreur est survenue après {self.timer.result}")
             self.progress_bar.setVisible(False)
             self.start_button.setEnabled(True)
 
