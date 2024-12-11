@@ -3,16 +3,19 @@
 # Ce fichier sera appelé depuis l'interface graphique.
 import threading
 import tools as tools
+from timer import TimerExecution
 
 PROMPT_DESCRIPTION = "Tu fais de l'audio description pour une personne non voyante. Voici une photo. Décris-la aussi précisément que possible."
 
 class Robot(threading.Thread):
     def __init__(self, function_on_progress, function_on_end):
+        self.timer = TimerExecution()
         threading.Thread.__init__(self)
         self.function_on_progress = function_on_progress
         self.function_on_end = function_on_end
 
     def run(self):
+        self.timer.start_timer()
         try:
             # Start with take picture
             self.function_on_progress("image")
@@ -23,14 +26,18 @@ class Robot(threading.Thread):
             analyseur.telecharger_image()
             response = analyseur.description(PROMPT_DESCRIPTION)
             if not response:
-                return self.function_on_end("error")
+                return self.__end("error")
             # End with say response.
             self.function_on_progress("saying")
             tools.text_to_speech(response)
-            self.function_on_end("success")
+            self.__end("success")
         except Exception as e:
             print(e)
-            self.function_on_end("error")
+            self.__end("error")
+
+    def __end(self, message):
+        self.timer.stop_timer()
+        self.function_on_end(message, self.timer.result)
 
 # Test du lanceur
 if __name__ == "__main__":
