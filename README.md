@@ -39,20 +39,32 @@ A compléter.
    git clone https://github.com/theotime2005/robot
    cd robot
    ```
-2. Créez un environnement virtuel et installez les dépendances  
+2. Mettre en place le projet  
    ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate
-   pip install -r requirements.txt
+   sh setup.sh
    ```
-3. Lancez le projet (non disponible actuellement) :  
+   3. Lancez le projet
+   1. Via l'interface graphique sur ordinateur
+    ```bash
+   python interface.py
+   ```
+   2. Via le fichier main pour un rendu en ligne de commande
    ```bash
-   python main.py
+   python main.py <model
    ```
+
+Note: Vous devez installer Ollama pour utiliser la partie ollama. Sinon, vous devrez utiliser Gemini. Vous pouvez créer une clef API pour Gemini gratuitement.
 
 ---
 
 ## Dépendances**   
-  - speech_recognition,
+- google-generativeai
+- gtts
+- ollama
+- opencv-python
+- playsound
+- PyObjC
+- python-dotenv
+- pyqt6
 
 ---
