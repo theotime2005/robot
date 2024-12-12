@@ -1,7 +1,9 @@
 import sys
+import tempfile
+
 from gtts import gTTS
 from playsound import playsound
-import tempfile
+
 
 def text_to_speech(text):
     """
