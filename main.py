@@ -10,6 +10,8 @@ class RobotMain:
         # Initialize keyboard listener
         self.listener = keyboard.Listener(on_press=self.on_press, on_release=self.on_release)
         self.listener.start()
+        # Informer l'utilisateur que le système est lancé
+        text_to_speech("Bienvenue. Je suis Laurent. Pour poser une question via Gemini apuyer sur la touche G. Pour poser une question via Ollama apuyer sur la touche O.")
 
     def on_press(self, key):
         try:
