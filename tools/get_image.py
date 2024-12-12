@@ -1,6 +1,8 @@
-import cv2
 import os
 import tempfile
+
+import cv2
+
 
 def capture_photo_to_tmp():
     """

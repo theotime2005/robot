@@ -1,7 +1,8 @@
 import os
 import sys
-from dotenv import load_dotenv, find_dotenv
+
 import google.generativeai as genai
+from dotenv import load_dotenv, find_dotenv
 
 # Charger les variables d'environnement
 load_dotenv(find_dotenv())

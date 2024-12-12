@@ -1,7 +1,8 @@
-import sys
 import os
+import sys
 
 from ollama import Client
+
 PROMPT_FILE_NAME = "prompt.txt"
 folder_path = os.path.dirname(os.path.abspath(__file__))
 PROMPT_FILE_PATH = os.path.join(folder_path, PROMPT_FILE_NAME)
