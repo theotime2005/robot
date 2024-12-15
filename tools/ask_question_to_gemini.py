@@ -10,7 +10,9 @@ api_key = os.getenv("GEMINI_API_KEY")
 
 # Vérifier si la clé API est présente
 if not api_key:
-    raise ValueError("La clé API GEMINI_API_KEY n'est pas définie dans les variables d'environnement.")
+    raise ValueError(
+        "La clé API GEMINI_API_KEY n'est pas définie dans les variables d'environnement."
+    )
 
 # Configurer l'API Gemini
 genai.configure(api_key=api_key)
@@ -18,6 +20,7 @@ genai.configure(api_key=api_key)
 PROMPT_FILE_NAME = "prompt.txt"
 folder_path = os.path.dirname(os.path.abspath(__file__))
 PROMPT_FILE_PATH = os.path.join(folder_path, PROMPT_FILE_NAME)
+
 
 class AnalyseurImageGemini:
     def __init__(self, chemin_image):
@@ -57,9 +60,11 @@ class AnalyseurImageGemini:
         response = model.generate_content([self.fichier, self.prompt])
         return response.text
 
+
 # Exemple d'utilisation
 if __name__ == "__main__":
     from timer import TimerExecution
+
     timer = TimerExecution()
     chemin_image = sys.argv[1]
     timer.start_timer()

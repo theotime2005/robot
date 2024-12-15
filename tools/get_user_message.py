@@ -1,5 +1,6 @@
 import speech_recognition as sr
 
+
 def get_user_message():
     """
     Get user message

@@ -47,9 +47,10 @@ class Robot(threading.Thread):
         self.timer.stop_timer()
         self.function_on_end(message, self.timer.result)
 
+
 # Test du lanceur
 if __name__ == "__main__":
-    if len(sys.argv)==2:
+    if len(sys.argv) == 2:
         robot = Robot(sys.argv[1], print, print)
         robot.start()
         robot.join()  # Attend que le thread se termine avant de quitter le programme

@@ -8,10 +8,14 @@ class RobotMain:
     def __init__(self):
         self.robot = None
         # Initialize keyboard listener
-        self.listener = keyboard.Listener(on_press=self.on_press, on_release=self.on_release)
+        self.listener = keyboard.Listener(
+            on_press=self.on_press, on_release=self.on_release
+        )
         self.listener.start()
         # Informer l'utilisateur que le système est lancé
-        text_to_speech("Bienvenue. Je suis Laurent. Pour poser une question via Gemini apuyer sur la touche G. Pour poser une question via Ollama apuyer sur la touche O.")
+        text_to_speech(
+            "Bienvenue. Je suis Laurent. Pour poser une question via Gemini apuyer sur la touche G. Pour poser une question via Ollama apuyer sur la touche O."
+        )
 
     def on_press(self, key):
         try:
@@ -36,7 +40,7 @@ class RobotMain:
         self.robot = Robot(
             model=model_name,
             function_on_progress=self._progress,
-            function_on_end=self._end
+            function_on_end=self._end,
         )
         self.robot.start()
 

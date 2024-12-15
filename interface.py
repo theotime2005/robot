@@ -1,7 +1,15 @@
 import sys
 
 from PyQt6.QtCore import QThread, pyqtSignal, Qt
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QProgressBar, QComboBox
+from PyQt6.QtWidgets import (
+    QApplication,
+    QWidget,
+    QVBoxLayout,
+    QPushButton,
+    QLabel,
+    QProgressBar,
+    QComboBox,
+)
 
 import tools
 from tools.timer import TimerExecution
@@ -44,6 +52,7 @@ class RobotWorker(QThread):
             print(e)
             self.update_signal.emit("error")
 
+
 class RobotApp(QWidget):
     def __init__(self):
         self.timer = TimerExecution()
@@ -76,7 +85,9 @@ class RobotApp(QWidget):
 
         # Indicateur de chargement
         self.progress_bar = QProgressBar()
-        self.progress_bar.setRange(0, 0)  # Pour un indicateur de chargement sans valeur précise
+        self.progress_bar.setRange(
+            0, 0
+        )  # Pour un indicateur de chargement sans valeur précise
         self.progress_bar.setVisible(False)
         self.layout.addWidget(self.progress_bar)
 
@@ -112,10 +123,13 @@ class RobotApp(QWidget):
             self.dropdown_menu.setEnabled(True)
         elif status == "error":
             self.timer.stop_timer()
-            self.status_label.setText(f"Une erreur est survenue après {self.timer.result}")
+            self.status_label.setText(
+                f"Une erreur est survenue après {self.timer.result}"
+            )
             self.progress_bar.setVisible(False)
             self.start_button.setEnabled(True)
             self.dropdown_menu.setEnabled(True)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

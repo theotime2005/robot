@@ -36,6 +36,7 @@ def capture_photo_to_tmp():
         cap.release()
         cv2.destroyAllWindows()
 
+
 # Exemple d'utilisation
 if __name__ == "__main__":
     try:

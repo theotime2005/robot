@@ -7,6 +7,7 @@ PROMPT_FILE_NAME = "prompt.txt"
 folder_path = os.path.dirname(os.path.abspath(__file__))
 PROMPT_FILE_PATH = os.path.join(folder_path, PROMPT_FILE_NAME)
 
+
 class AnalyseurOllama:
     def __init__(self, image_path):
         self.image_path = image_path
@@ -25,20 +26,20 @@ class AnalyseurOllama:
         if not self.image_path:
             return False
         client = Client(
-            host='http://localhost:11434',
-            headers={'x-some-header': 'some-value'}
+            host="http://localhost:11434", headers={"x-some-header": "some-value"}
         )
-        response = client.chat(model='llama3.2-vision', messages=[
-            {
-                'role': 'user',
-                'content': self.prompt,
-                'images': [self.image_path]
-            },
-        ])
+        response = client.chat(
+            model="llama3.2-vision",
+            messages=[
+                {"role": "user", "content": self.prompt, "images": [self.image_path]},
+            ],
+        )
         return response.message.content
+
 
 if __name__ == "__main__":
     from timer import TimerExecution
+
     timer = TimerExecution()
     image_path = sys.argv[1]
     timer.start_timer()
