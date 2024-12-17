@@ -3,6 +3,7 @@
 # Ce fichier sera appelé depuis l'interface graphique.
 import sys
 import threading
+import subprocess
 import tools as tools
 from tools.timer import TimerExecution
 
@@ -13,6 +14,7 @@ class Robot(threading.Thread):
         self.model = model
         self.function_on_progress = function_on_progress
         self.function_on_end = function_on_end
+        self.audio = None
 
     def run(self):
         self.timer.start_timer()
@@ -22,23 +24,32 @@ class Robot(threading.Thread):
             image = tools.capture_photo_to_tmp()
             # Continue with analyzing picture
             self.function_on_progress("analyse")
+            self.audio = subprocess.Popen([
+                "vlc", "--intf", "dummy", "--play-and-exit", "--gain=4", "--loop", "resources/audio/analyse.wav"
+            ])
             if self.model == "gemini":
                 analyseur = tools.AnalyseurImageGemini(image)
                 analyseur.telecharger_image()
                 response = analyseur.description()
                 if not response:
+                    self.audio.terminate()
                     return self.__end("error")
             elif self.model == "ollama":
                 analyseur = tools.AnalyseurOllama(image)
                 response = analyseur.send_question()
                 if not response:
+                    self.audio.terminate()
                     return self.__end("error")
+            # Stop l'audio
+            self.audio.terminate()
             # End with say response.
             self.function_on_progress("saying")
             tools.text_to_speech(response)
             self.__end("success")
         except Exception as e:
             print(e)
+            if self.audio:
+                self.audio.terminate()
             self.__end("error")
 
     def __end(self, message):
