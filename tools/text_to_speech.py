@@ -15,7 +15,7 @@ def text_to_speech(text, volume=400):
         tts.save(tmp_file.name)
         # Utiliser VLC en ligne de commande pour lire le fichier audio avec volume ajusté
         subprocess.run([
-            "cvlc", "--intf", "dummy", "--play-and-exit", f"--gain={gain}", tmp_file.name
+            "vlc", "--intf", "dummy", "--play-and-exit", f"--gain={gain}", tmp_file.name
         ], check=True)
 
 # Exemple d'utilisation
