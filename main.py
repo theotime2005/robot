@@ -47,6 +47,6 @@ class Robot(threading.Thread):
 # Test du lanceur
 if __name__ == "__main__":
     if len(sys.argv)==2:
-        robot = Robot(sys.argv[1], print, print)
+        robot = Robot(sys.argv[1], tools.text_to_speech, print)
         robot.start()
         robot.join()  # Attend que le thread se termine avant de quitter le programme
