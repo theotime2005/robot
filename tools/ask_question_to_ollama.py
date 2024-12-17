@@ -2,6 +2,11 @@ import os
 import sys
 
 from ollama import Client
+from dotenv import load_dotenv, find_dotenv
+
+# Charger les variables d'environnement
+load_dotenv(find_dotenv())
+API_URL = os.getenv("OLLAMA_URL")
 
 PROMPT_FILE_NAME = "prompt.txt"
 folder_path = os.path.dirname(os.path.abspath(__file__))
@@ -26,7 +31,7 @@ class AnalyseurOllama:
         if not self.image_path:
             return False
         client = Client(
-            host="http://localhost:11434", headers={"x-some-header": "some-value"}
+            host=API_URL, headers={"x-some-header": "some-value"}
         )
         response = client.chat(
             model="llama3.2-vision",
