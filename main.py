@@ -1,69 +1,52 @@
-from pynput import keyboard
+# Point d'entré pour le processus du robot
+# On va utiliser la configuration pour ordinateur
+# Ce fichier sera appelé depuis l'interface graphique.
+import sys
+import threading
+import tools as tools
+from tools.timer import TimerExecution
 
-from robot import Robot
-from tools.text_to_speech import text_to_speech
+class Robot(threading.Thread):
+    def __init__(self, model, function_on_progress, function_on_end):
+        self.timer = TimerExecution()
+        threading.Thread.__init__(self)
+        self.model = model
+        self.function_on_progress = function_on_progress
+        self.function_on_end = function_on_end
 
-
-class RobotMain:
-    def __init__(self):
-        self.robot = None
-        # Initialize keyboard listener
-        self.listener = keyboard.Listener(
-            on_press=self.on_press, on_release=self.on_release
-        )
-        self.listener.start()
-        # Informer l'utilisateur que le système est lancé
-        text_to_speech(
-            "Bienvenue. Je suis Laurent. Pour poser une question via Gemini apuyer sur la touche G. Pour poser une question via Ollama apuyer sur la touche O."
-        )
-
-    def on_press(self, key):
+    def run(self):
+        self.timer.start_timer()
         try:
-            # Convert char to uppercase and check the key pressed
-            press_key = key.char.upper()
-            if press_key == "G" and not self.robot:
-                self._start_robot("gemini")
-            elif press_key == "O" and not self.robot:
-                self._start_robot("ollama")
-        except AttributeError:
-            # Handle special keys (e.g., Shift, Ctrl) that don't have a 'char' attribute
-            pass
+            # Start with take picture
+            self.function_on_progress("image")
+            image = tools.capture_photo_to_tmp()
+            # Continue with analyzing picture
+            self.function_on_progress("analyse")
+            if self.model == "gemini":
+                analyseur = tools.AnalyseurImageGemini(image)
+                analyseur.telecharger_image()
+                response = analyseur.description()
+                if not response:
+                    return self.__end("error")
+            elif self.model == "ollama":
+                analyseur = tools.AnalyseurOllama(image)
+                response = analyseur.send_question()
+                if not response:
+                    return self.__end("error")
+            # End with say response.
+            self.function_on_progress("saying")
+            tools.text_to_speech(response)
+            self.__end("success")
         except Exception as e:
-            print(f"Erreur: {e}")
+            print(e)
+            self.__end("error")
 
-    def on_release(self, key):
-        # No action on key release for now
-        pass
-
-    def _start_robot(self, model_name):
-        """Start the robot with the specified model."""
-        self.robot = Robot(
-            model=model_name,
-            function_on_progress=self._progress,
-            function_on_end=self._end,
-        )
-        self.robot.start()
-
-    def _progress(self, message):
-        """Handle progress messages from the robot."""
-        if message == "image":
-            text_to_speech("Je prends la photo")
-        elif message == "analyse":
-            text_to_speech("J'analyse l'image")
-        else:
-            # Handle unexpected progress messages gracefully
-            print(f"Progress: {message}")
-
-    def _end(self, message, time):
-        """Handle end messages from the robot."""
-        if message == "error":
-            text_to_speech("Il y a une erreur")
-        else:
-            print(f"Execution completed in {time} seconds.")
-        self.robot = None
-
-
-# Start
+    def __end(self, message):
+        self.timer.stop_timer()
+        self.function_on_end(message, self.timer.result)
+# Test du lanceur
 if __name__ == "__main__":
-    robot_main = RobotMain()
-    robot_main.listener.join()
+    if len(sys.argv)==2:
+        robot = Robot(sys.argv[1], print, print)
+        robot.start()
+        robot.join()  # Attend que le thread se termine avant de quitter le programme

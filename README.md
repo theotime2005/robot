@@ -50,16 +50,14 @@ A compléter.
    ```
    2. Via le fichier main pour un rendu en ligne de commande
    ```bash
-   python main.py
+   python main.py <model
    ```
-   Vous pouvez alors appuyer sur o pour utiliser Ollama et g pour Gemini.
 
 Note: Vous devez installer Ollama pour utiliser la partie ollama. Sinon, vous devrez utiliser Gemini. Vous pouvez créer une clef API pour Gemini gratuitement.
 
 ---
 
-## Dépendances**
-- wheel
+## Dépendances**   
 - google-generativeai
 - gtts
 - ollama

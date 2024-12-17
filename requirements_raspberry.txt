@@ -1,8 +1,7 @@
+wheel
 google-generativeai
 gtts
 ollama
 opencv-python
 playsound
-PyObjC
 python-dotenv
-pyqt6
