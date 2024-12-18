@@ -3,7 +3,7 @@ from gtts import gTTS
 import tempfile
 import subprocess
 
-def text_to_speech(text, volume=400):
+def text_to_speech(text, volume=600):
     """
     Énonce le texte en utilisant gTTS et VLC, avec un contrôle du volume.
     :param text: Le texte à énoncer.
