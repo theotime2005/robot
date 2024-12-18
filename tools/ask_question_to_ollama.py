@@ -30,9 +30,7 @@ class AnalyseurOllama:
     def send_question(self):
         if not self.image_path:
             return False
-        client = Client(
-            host=API_URL, headers={"x-some-header": "some-value"}
-        )
+        client = Client(host=API_URL, headers={"x-some-header": "some-value"})
         response = client.chat(
             model="llama3.2-vision",
             messages=[

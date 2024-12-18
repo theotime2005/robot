@@ -3,6 +3,7 @@ from gtts import gTTS
 import tempfile
 import subprocess
 
+
 def text_to_speech(text, volume=900):
     """
     Énonce le texte en utilisant gTTS et VLC, avec un contrôle du volume.
@@ -14,9 +15,18 @@ def text_to_speech(text, volume=900):
     with tempfile.NamedTemporaryFile(delete=True, suffix=".mp3") as tmp_file:
         tts.save(tmp_file.name)
         # Utiliser VLC en ligne de commande pour lire le fichier audio avec volume ajusté
-        subprocess.run([
-            "vlc", "--intf", "dummy", "--play-and-exit", f"--gain={gain}", tmp_file.name
-        ], check=True)
+        subprocess.run(
+            [
+                "vlc",
+                "--intf",
+                "dummy",
+                "--play-and-exit",
+                f"--gain={gain}",
+                tmp_file.name,
+            ],
+            check=True,
+        )
+
 
 # Exemple d'utilisation
 if __name__ == "__main__":
